@@ -1,0 +1,66 @@
+/* Background */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(120deg, #89f7fe, #66a6ff);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.5s, color 0.5s;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+}
+
+/* Dark Mode */
+body.dark {
+  background: linear-gradient(120deg, #2c3e50, #4ca1af);
+  color: #eee;
+}
+
+/* Container with Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Button Styling */
+#themeBtn {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease, background 0.5s ease;
+}
+
+#themeBtn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+/* Icon Spin Animation */
+#themeIcon.spin {
+  animation: spin 1s ease;
+}
+
+/* Gradient Animation */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Icon Spin Keyframe */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
