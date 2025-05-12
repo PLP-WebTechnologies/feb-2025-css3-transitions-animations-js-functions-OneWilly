@@ -1,67 +1,66 @@
-window.onload = () => {
-  const savedTheme = localStorage.getItem("theme");
-  const body = document.body;
-  const icon = document.getElementById("themeIcon");
-
-  if (savedTheme === "dark") {
-    body.classList.add("dark");
-    icon.classList.replace("fa-sun", "fa-moon");
-  }
+// Initialize user preferences
+let userPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {
+  theme: 'light',
+  animationSpeed: 1,
+  fontSize: 16
 };
 
-document.getElementById("themeBtn").addEventListener("click", () => {
+// Apply saved preferences on page load
+function applyPreferences() {
+  // Theme
+  document.body.className = userPreferences.theme;
+  document.documentElement.style.setProperty('--animation-speed', `${userPreferences.animationSpeed}s`);
+  document.body.style.fontSize = `${userPreferences.fontSize}px`;
+
+  // Update UI controls to match saved values
+  document.querySelector('#speed-slider').value = userPreferences.animationSpeed;
+  document.querySelector('#font-size').value = userPreferences.fontSize;
+}
+
+// Save preferences to localStorage
+function savePreferences() {
+  localStorage.setItem('userPreferences', JSON.stringify(userPreferences));
+}
+
+// Toggle theme (single function)
+function toggleTheme() {
   const body = document.body;
   const icon = document.getElementById("themeIcon");
 
-  body.classList.toggle("dark");
+  // Update theme
+  userPreferences.theme = userPreferences.theme === 'light' ? 'dark' : 'light';
+  body.className = userPreferences.theme;
 
-  // Save preference
-  const theme = body.classList.contains("dark") ? "dark" : "light";
-  localStorage.setItem("theme", theme);
+  // Update icon
+  icon.classList.toggle('fa-moon', userPreferences.theme === 'dark');
+  icon.classList.toggle('fa-sun', userPreferences.theme === 'light');
 
-  // Switch icon
-  if (body.classList.contains("dark")) {
-    icon.classList.replace("fa-sun", "fa-moon");
-  } else {
-    icon.classList.replace("fa-moon", "fa-sun");
-  }
+  // Trigger animations
+  icon.classList.add('spin');
+  setTimeout(() => icon.classList.remove('spin'), 1000);
 
-  // Animate icon
-  icon.classList.add("spin");
-  setTimeout(() => icon.classList.remove("spin"), 1000);
-});
+  // Ripple effect
+  const ripple = document.createElement("span");
+  ripple.className = "ripple";
+  document.getElementById("themeBtn").appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
 
-document.getElementById("themeBtn").addEventListener("click", function(e) {
-  const circle = document.createElement("span");
-  circle.className = "ripple";
-  this.appendChild(circle);
-
-  circle.style.left = `${e.offsetX}px`;
-  circle.style.top = `${e.offsetY}px`;
-
-  setTimeout(() => circle.remove(), 600);
-});
-
-function toggleTheme() {
-  // ... existing code ...
-  // Trigger pulse animation
-  themeToggle.classList.add('animate-pulse');
-  setTimeout(() => {
-    themeToggle.classList.remove('animate-pulse');
-  }, 1000);
+  // Save preferences
+  savePreferences();
 }
 
+// Event listeners
+document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+document.querySelector('#speed-slider').addEventListener('input', (e) => {
+  userPreferences.animationSpeed = e.target.value;
+  document.documentElement.style.setProperty('--animation-speed', `${e.target.value}s`);
+  savePreferences();
+});
+document.querySelector('#font-size').addEventListener('change', (e) => {
+  userPreferences.fontSize = e.target.value;
+  document.body.style.fontSize = `${e.target.value}px`;
+  savePreferences();
+});
 
-function toggleTheme() {
-  const body = document.body;
-  const newTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
-  body.classList.toggle('dark-theme');
-  localStorage.setItem('theme', newTheme);
-  
-  // Trigger pulse animation on the theme toggle button
-  const themeToggle = document.querySelector('.theme-toggle');
-  themeToggle.classList.add('animate-pulse');
-  setTimeout(() => {
-    themeToggle.classList.remove('animate-pulse');
-  }, 1000); // Matches animation duration
-}
+// Initialize on load
+applyPreferences();

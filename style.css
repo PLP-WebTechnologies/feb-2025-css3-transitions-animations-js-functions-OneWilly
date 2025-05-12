@@ -1,3 +1,30 @@
+/* css variables for dynamic control */
+:root {
+  --animation-speed: 1s; /* Default animation speed */
+}
+
+/* animation to use the CSS variable */
+.animate-pulse {
+  animation: pulse var(--animation-speed) ease-in-out;
+}
+
+/* controls */
+.controls {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.controls label {
+  margin-right: 10px;
+}
+
+.controls input,
+.controls select {
+  margin-right: 20px;
+}
+
 /* Background */
 body {
   margin: 0;
