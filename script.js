@@ -41,3 +41,27 @@ document.getElementById("themeBtn").addEventListener("click", function(e) {
 
   setTimeout(() => circle.remove(), 600);
 });
+
+function toggleTheme() {
+  // ... existing code ...
+  // Trigger pulse animation
+  themeToggle.classList.add('animate-pulse');
+  setTimeout(() => {
+    themeToggle.classList.remove('animate-pulse');
+  }, 1000);
+}
+
+
+function toggleTheme() {
+  const body = document.body;
+  const newTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+  body.classList.toggle('dark-theme');
+  localStorage.setItem('theme', newTheme);
+  
+  // Trigger pulse animation on the theme toggle button
+  const themeToggle = document.querySelector('.theme-toggle');
+  themeToggle.classList.add('animate-pulse');
+  setTimeout(() => {
+    themeToggle.classList.remove('animate-pulse');
+  }, 1000); // Matches animation duration
+}
