@@ -30,3 +30,14 @@ document.getElementById("themeBtn").addEventListener("click", () => {
   icon.classList.add("spin");
   setTimeout(() => icon.classList.remove("spin"), 1000);
 });
+
+document.getElementById("themeBtn").addEventListener("click", function(e) {
+  const circle = document.createElement("span");
+  circle.className = "ripple";
+  this.appendChild(circle);
+
+  circle.style.left = `${e.offsetX}px`;
+  circle.style.top = `${e.offsetY}px`;
+
+  setTimeout(() => circle.remove(), 600);
+});
